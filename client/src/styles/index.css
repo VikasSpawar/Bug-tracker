@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* --- 1. Premium Dark Theme Configuration --- */
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Brand Colors */
+  --color-primary: #6366f1;       /* Electric Indigo */
+  --color-primary-hover: #4f46e5;
+  --color-accent-mint: #34d399;   /* Mint Green */
+  
+  /* Dark Navy Palette */
+  --color-navy-900: #0b0f19;      /* Deepest Background */
+  --color-navy-800: #111827;      /* Secondary Background */
+  --color-navy-700: #1e293b;      /* Surface / Card */
+  --color-navy-600: #334155;      /* Borders */
+  
+  /* Text Colors */
+  --color-slate-100: #f1f5f9;     /* Text Primary */
+  --color-slate-300: #cbd5e1;     /* Text Secondary */
+  --color-slate-400: #94a3b8;     /* Text Muted */
+  
+  /* Shadows */
+  --shadow-premium: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.25);
+  
+  /* Animations */
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-fade-in: fadeIn 0.3s ease-in-out;
+  --animate-slide-up: slideUp 0.3s ease-in-out;
+  --animate-slide-down: slideDown 0.3s ease-in-out;
+}
+
+/* --- 2. Global Resets --- */
+:root {
+  font-family: var(--font-sans);
+  background-color: var(--color-navy-900);
+  color: var(--color-slate-100);
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-navy-900 text-slate-100 antialiased selection:bg-primary selection:text-white;
+}
+
+/* --- 3. Custom Scrollbar --- */
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #0b0f19;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
+
+/* Apply scrollbar to all scrolling elements by default */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-navy-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy-600);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-400);
+}
+
+/* --- 4. Animations Keyframes --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+}
+
+/* --- 5. Component Classes (Updated for Dark Mode) --- */
+
+/* Glass Effect */
+.glass {
+  background: rgba(17, 24, 39, 0.7); /* navy-800 with opacity */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Buttons */
+.btn-primary {
+  @apply px-4 py-2 bg-primary text-white font-semibold rounded-xl transition-all duration-300 transform shadow-glow;
+}
+.btn-primary:hover {
+  @apply bg-primary-hover scale-105;
+}
+.btn-primary:active {
+  @apply scale-95;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-navy-700 text-slate-200 font-semibold rounded-xl transition-all duration-300 border border-navy-600;
+}
+.btn-secondary:hover {
+  @apply bg-navy-600 text-white;
+}
+
+.btn-danger {
+  @apply px-4 py-2 bg-red-600/20 text-red-400 font-semibold rounded-xl transition-all duration-300 border border-red-600/30;
+}
+.btn-danger:hover {
+  @apply bg-red-600 text-white border-red-600;
+}
+
+/* Cards */
+.card {
+  @apply bg-navy-800 rounded-xl border border-navy-700 shadow-sm transition-all duration-300;
+}
+.card:hover {
+  @apply shadow-premium border-primary/30 transform -translate-y-1;
+}
+
+/* Inputs */
+.input-field {
+  @apply w-full px-4 py-3 bg-navy-900 border border-navy-700 rounded-xl outline-none transition-all duration-300 text-slate-200 placeholder-slate-500;
+}
+.input-field:focus {
+  @apply border-primary ring-1 ring-primary;
+}
+.input-field:disabled {
+  @apply bg-navy-900/50 cursor-not-allowed opacity-60;
+}
+
+/* Badges */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+}
+.badge-primary { @apply bg-primary/20 text-primary border border-primary/20; }
+.badge-success { @apply bg-accent-mint/20 text-accent-mint border border-accent-mint/20; }
+.badge-warning { @apply bg-amber-400/20 text-amber-400 border border-amber-400/20; }
+.badge-danger  { @apply bg-red-500/20 text-red-400 border border-red-500/20; }
+.badge-gray    { @apply bg-navy-700 text-slate-400 border border-navy-600; }
+
+/* Status Indicators */
+.status-online {
+  @apply relative inline-block h-3 w-3 rounded-full bg-accent-mint;
+}
+.status-online::after {
+  content: '';
+  @apply absolute inset-0 rounded-full bg-accent-mint animate-ping opacity-75;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  @apply animate-pulse bg-navy-700 rounded;
+}
+
+/* Text Utilities */
+.text-truncate {
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+/* --- 6. PERFORMANCE OPTIMIZATIONS (New) --- */
+
+/* 1. Force GPU Acceleration for dragging elements */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0); 
+  backface-visibility: hidden;
+}
+
+/* 2. Kill Interactions while dragging to prevent hover calculation lag */
+.is-dragging * {
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+/* 3. Optimized Transition for Cards (Avoids 'all') */
+.card-transition {
+  transition-property: transform, opacity, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
